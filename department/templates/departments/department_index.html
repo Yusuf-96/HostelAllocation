@@ -1,0 +1,215 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block content %}
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+
+
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Department Table</h3>
+                        {% if perms.deparment.add_department %}
+                        <div class="float-right">
+                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createRoom">Add Department</button>
+                        </div>
+                       {% endif%}
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <!-- <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_length" id="example1_length"><label>Show <select
+                                                name="example1_length" aria-controls="example1"
+                                                class="custom-select custom-select-sm form-control form-control-sm">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select> entries</label></div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div id="example1_filter" class="dataTables_filter"><label>Search:<input
+                                                type="search" class="form-control form-control-sm" placeholder=""
+                                                aria-controls="example1"></label></div>
+                                </div>
+                            </div> -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="example1" class="table table-bordered table-striped dataTable dtr-inline"
+                                        role="grid" aria-describedby="example1_info">
+                                        <thead>
+                                            <tr role="row">
+                                               
+                                               
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="Engine version: activate to sort column ascending">
+                                                    ID</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="Engine version: activate to sort column ascending">
+                                                    Name</th>
+                                                    {% if perms.departmetn.add_department %}
+                                                    <th>Actions
+                                                    </th>
+                                                    {% endif%}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for department in departments  %}
+                                            <tr role="row" class="odd">
+                                                <td tabindex="0" class="sorting_1">{{ forloop.counter }}</td>
+                                                <td tabindex="0" class="sorting_1">{{ department.name }}</td>
+                                                {% if perms.department.add_department %}
+                                                <td>
+                                                    <a href="javascript:void" class="btn btn-primary btn-sm"
+                                                    data-toggle="modal" data-target="#edit{{ department.id }}"> Edit   </a>
+                                                    <a href="javascript:void" class="btn btn-danger btn-sm" 
+                                                    data-toggle="modal" data-target="#delete{{ department.id }}"> Delete   </a>
+                                                    <!-- <a href="" class="btn btn-secondary btn-sm"> Disable   </a> -->
+ 
+                                                </td>
+                                                {% endif%}
+
+
+                                                <!-- Edit Modal -->
+                        <div class="modal fade" id="edit{{ department.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit department</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <form action="{{ department.update_department }}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                        <p><label for="id_name">Name:</label> <input type="text" name="name" value="{{ department.name }}" class="form-control" 
+                                        placeholder="department name..." maxlength="100" required="" id="id_name"></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Update Department</button>
+                                    </div>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+
+
+                                                <!-- Delete model -->
+
+                                                <div class="modal fade" id="delete{{ department.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <h5 class="modal-title" id="exampleModalLabel">Delete Department</h5>
+                                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                          </button>
+                                                        </div>
+                                                        <form action="{{ department.remove_department }}" >
+                                                        <div class="modal-body">
+                                                          Are You Sure? Delete <strong style="color: red;"> {{ department.name }} </strong>  ?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                                          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                        </div>
+                                                    </form>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                
+
+
+
+
+
+                                            </tr>
+                                            {% endfor %}
+
+                                        </tbody>
+                                
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
+                                        Showing 1 to 10 of 57 entries</div>
+                                </div>
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                        <ul class="pagination">
+                                            <li class="paginate_button page-item previous disabled"
+                                                id="example1_previous"><a href="#" aria-controls="example1"
+                                                    data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+                                            <li class="paginate_button page-item active"><a href="#"
+                                                    aria-controls="example1" data-dt-idx="1" tabindex="0"
+                                                    class="page-link">1</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="example1"
+                                                    data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="example1"
+                                                    data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="example1"
+                                                    data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="example1"
+                                                    data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="example1"
+                                                    data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
+                                            <li class="paginate_button page-item next" id="example1_next"><a href="#"
+                                                    aria-controls="example1" data-dt-idx="7" tabindex="0"
+                                                    class="page-link">Next</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="createRoom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Department</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{% url 'department:index' %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create Department</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

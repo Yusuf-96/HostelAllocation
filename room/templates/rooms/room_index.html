@@ -1,0 +1,310 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block content %}
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+
+        {% if  not user.allocate.all or user.is_superuser %}
+
+
+        <div class="row">
+            <div class="col-12">
+
+
+
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Room Table</h3>
+                        {%  if perms.room.add_room %}
+                        <div class="float-right">
+                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createRoom"> Add
+                                Room</button>
+                        </div>
+                        {% endif  %}
+                    </div>
+
+                    <div class="row">
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <!-- <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_length" id="example1_length"><label>Show <select
+                                                name="example1_length" aria-controls="example1"
+                                                class="custom-select custom-select-sm form-control form-control-sm">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select> entries</label></div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div id="example1_filter" class="dataTables_filter"><label>Search:<input
+                                                type="search" class="form-control form-control-sm" placeholder=""
+                                                aria-controls="example1"></label></div>
+                                </div>
+                            </div> -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="example1" class="table table-bordered table-striped dataTable dtr-inline"
+                                        role="grid" aria-describedby="example1_info">
+                                        <thead>
+                                            <tr role="row">
+
+
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="Engine version: activate to sort column ascending">
+                                                    ID</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="Engine version: activate to sort column ascending">
+                                                    Name</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="CSS grade: activate to sort column ascending">Capacity
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="CSS grade: activate to sort column ascending">Hostel
+                                                </th>
+                                                 <!-- <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="CSS grade: activate to sort column ascending">Currently Total
+                                                </th>  -->
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="CSS grade: activate to sort column ascending">Actions
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for room in rooms  %}
+                                            <tr role="row" class="odd">
+                                                <td tabindex="0" class="sorting_1">{{ forloop.counter }}</td>
+                                                <td tabindex="0" class="sorting_1">{{ room.name }}</td>
+                                                <td>{{ room.capacity }}</td>
+                                                <td>{{ room.hostel }}</td>
+                                                <!-- <td>{{ room.level }}</td>  -->
+                                                <td>
+                                                    {% if room.level  == room.capacity %}
+                                                    <div class="badge badge-success">Full</div>
+                                                     {%else%}
+                                                     <a href="javascript:void" class="btn btn-success btn-sm" 
+                                                     data-toggle="modal" data-target="#apply{{ room.id }}">Apply Room </a>    
+                                                     {% endif %}
+                                                    
+                                              <!-- {%  if perms.room.add_room %} -->
+                                                    
+                                                    <a href="" class="btn btn-primary btn-sm" 
+                                                    data-toggle="modal" data-target="#edit{{ room.id }}"> Edit </a>
+                                                    <a href="javascript:void" class="btn btn-danger btn-sm"
+                                                        data-toggle="modal" data-target="#delete{{ room.id }}"> Delete
+                                                    </a>
+                                                    <!-- <a href="" class="btn btn-secondary btn-sm"> Disable </a> -->
+                                                <!-- {% endif %} -->
+                                                </td>
+                                                <!-- edit -->
+
+                                                <div class="modal fade" id="edit{{ room.id }}" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Edit
+                                                                    Room</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form action="{{ room.update_room }}" method="POST">
+                                                                {% csrf_token %}
+                                                                <div class="modal-body">
+
+                                                                    <p><label for="id_hostel">Hostel:
+
+                                                                    </label> 
+                                                                   {{ form.hostel}}
+                                                                    </p>
+                                                                    <p><label for="id_name">Name:</label> <input
+                                                                            type="text" name="name" value="{{ room.name }}"
+                                                                            class="form-control" maxlength="100"
+                                                                            required="" id="id_name"></p>
+                                                                    <p><label for="id_is_taken">Is taken:</label> <input
+                                                                            type="checkbox" name="is_taken"
+                                                                            id="id_is_taken"></p>
+                                                                    <p><label for="id_capacity">Capacity:</label> <input
+                                                                            type="number" value="{{ room.capacity }}" name="capacity" value="6"
+                                                                            class="form-control" required=""
+                                                                            id="id_capacity"></p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-primary">Update
+                                                                        </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- ================================apply======================================= -->
+                                                <div class="modal fade" id="apply{{ room.id }}" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete
+                                                                    Room</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form action="{{ room.apply_room }}" >
+                                                                <div class="modal-body">
+                                                                   Your About to Apply Room name <strong
+                                                                        style="color: red;">"{{ room.name }}"</strong> ?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary btn-sm"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-success btn-sm">
+                                                                        Apply</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- ================================delete======================================= -->
+                                                <div class="modal fade" id="delete{{ room.id }}" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete
+                                                                    Room</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form action="{{ room.remove_room }}">
+                                                                <div class="modal-body">
+                                                                    Are You Sure? Delete Room No <strong
+                                                                        style="color: red;"> {{ room.name }} </strong> ?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary btn-sm"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                                        Delete</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                            </tr>
+                                            {% endfor %}
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
+                                        Showing 1 to 10 of 57 entries</div>
+                                </div>
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                        <ul class="pagination">
+                                            <li class="paginate_button page-item previous disabled"
+                                                id="example1_previous"><a href="#" aria-controls="example1"
+                                                    data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+                                            <li class="paginate_button page-item active"><a href="#"
+                                                    aria-controls="example1" data-dt-idx="1" tabindex="0"
+                                                    class="page-link">1</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="example1"
+                                                    data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="example1"
+                                                    data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="example1"
+                                                    data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="example1"
+                                                    data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="example1"
+                                                    data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
+                                            <li class="paginate_button page-item next" id="example1_next"><a href="#"
+                                                    aria-controls="example1" data-dt-idx="7" tabindex="0"
+                                                    class="page-link">Next</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+            </div>
+        </div>
+        {% else %}
+       <div class="jumbotron text-center">
+      <h5 class="text-success">  You Have Allocated! Thanks </h3>
+       </div>
+        {% endif %}
+    </div>
+</section>
+
+
+
+
+
+
+<div class="modal fade" id="createRoom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Room</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{% url 'room:index' %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create Room</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

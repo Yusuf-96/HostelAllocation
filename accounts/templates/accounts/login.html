@@ -1,0 +1,96 @@
+{% extends 'accounts/layouts/base.html ' %}
+{% load static%}
+{% block content %}
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-white navbar-light " >
+    <!-- Left navbar links -->
+
+    <div class="container">
+        <a class="navbar-brand" href="">Hostel Allocation Management System</a>
+        <a class="navbar-brand flex-right " href="">Login</a>
+    </div>
+  
+</nav>
+
+
+<br>
+<br>
+<br>
+    <div class="container">
+        <div class="page-wrapper align-items-center">
+                <div class="row justify-content-center" >
+                    <div class="col-md-6" >
+                            {% include 'layouts/partials/inc/msg.html' %}
+
+                        <div class="card" style="border: .5px solid #466777;padding:50px 100px;border-radius:5px; opacity: .8; box-shadow: darkgrey;">
+    
+                            <div class=" text-center text-uppercase ">
+                                
+                                Login
+                                
+                            </div>
+                            <br>
+    
+        
+                            <div >
+                                <form action="{% url 'login' %}" method="POST">
+                                    {% csrf_token %}
+                                        <div class="card-body justify-content-center">
+                                               
+                                             
+                                              
+                                                <div class="form-group">
+                                                    <label for="username" class="">Username</label>
+                                                    <input type="text" class="form-control" name="username" placeholder="Username"   required>
+                                                </div>
+                        
+                        
+                                                <div class="form-group">
+                                                    <label for="password" class="">Password</label>
+                                                    <input type="password" class="form-control" name="password"  placeholder="Password"  required>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input type="checkbox" class="custom-control-input" id="login">
+                                                    <label class="custom-control-label" for="login">Remember Me</label>
+                                                </div>
+                        
+                                              
+                                            </div>
+                        
+                                            <div class="footer">
+                                                <button type="submit" class="btn btn-primary btn-sm" >Login</button>
+                                                <div class="col-6">
+                                                    <a href="{% url 'reset'%}" class="btn btn-link" style="text-decoration: none;">Forgot password?</a>
+                                                </div>
+                                            </div>
+                                </form>
+                               
+                            </div>
+                        </div>
+                  
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% endblock%}
