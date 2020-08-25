@@ -44,7 +44,26 @@ class Update(View):
 
 def delete_allocate(request,id):
     allocate=Allocate.objects.filter(id=id)
+    room_id=allocate[0].room.id
+    room_level=allocate[0].room.level
+    room_level-=1
+    Room.objects.filter(id=room_id).update(level=room_level)
     allocate.delete()
+    messages.success(request,'allocate deleted successfully')
+    return redirect('allocate:index')
+
+
+
+def approve_allocate(request,id):
+    allocate=Allocate.objects.filter(id=id)
+    allocate.update(is_approved=True)
+    messages.success(request,f'You have approve {allocate[0].user} successfully')
+    return redirect('allocate:index')
+
+def undo_approve_allocate(request,id):
+    allocate=Allocate.objects.filter(id=id)
+    allocate.update(is_approved=False)
+    messages.success(request,f'You have disqualified {allocate[0].user} successfully')
     return redirect('allocate:index')
 
 

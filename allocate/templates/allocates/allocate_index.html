@@ -17,10 +17,10 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Allocate Table</h3>
-                        <div class="float-right">
+                        <!-- <div class="float-right">
                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createRoom"> Add
                                 Allocate</button>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -67,8 +67,14 @@
                                                     colspan="1"
                                                     aria-label="Engine version: activate to sort column ascending">
                                                     status</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Engine version: activate to sort column ascending">Preview
+                                                </th>
 
-                                                <th>Actions
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Engine version: activate to sort column ascending">Actions
                                                 </th>
                                             </tr>
                                         </thead>
@@ -78,9 +84,21 @@
                                                 <td tabindex="0" class="sorting_1">{{ forloop.counter }}</td>
                                                 <td tabindex="0" class="sorting_1">{{ allocate.room }}</td>
                                                 <td tabindex="0" class="sorting_1">{{ allocate.user }}</td>
-                                                <td tabindex="0" class="sorting_1">
-                                                    {{ allocate.is_allocated }}
 
+                                                <td tabindex="0" class="sorting_1">
+                                                    {% if allocate.is_approved %}
+                                                    <div class="badge badge-success">
+                                                        verified
+                                                    </div>
+                                                    {% else  %}
+                                                    <div class="badge badge-warning">
+                                                        Not verified
+                                                    </div>
+                                                    {% endif  %}
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void" class="btn btn-primary btn-sm
+                                                    "  data-toggle="modal" data-target="#">view details </a>
                                                 </td>
                                                 <td>
                                                 
@@ -89,7 +107,13 @@
                                                     <a href="javascript:void" class="btn btn-danger btn-sm"
                                                         data-toggle="modal" data-target="#delete{{ allocate.id }}">
                                                         Delete </a>
-                                                    <!-- <a href="" class="btn btn-secondary btn-sm"> Disable </a> -->
+                                                    {% if not allocate.is_approved %}
+                                                        <a href=""  data-toggle="modal" data-target="#approve{{ allocate.id }}" 
+                                                    class="btn btn-info btn-sm"> Approve </a>
+                                                    {% else %}
+                                                    <a href=""  data-toggle="modal" data-target="#approve{{ allocate.id }}" 
+                                                    class="btn btn-warning btn-sm">UNDO </a>
+                                                    {% endif  %}
 
                                                 </td>
 
@@ -107,7 +131,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form action="{{ allocate.update_allocate }}" method="POST">
+                                                            <form  action="{{ allocate.update_allocate }}"  method="POST">
                                                                 {% csrf_token %}
                                                                 <div class="modal-body">
 
@@ -169,6 +193,43 @@
                                                                         data-dismiss="modal">Close</button>
                                                                     <button type="submit" class="btn btn-danger btn-sm">
                                                                         Delete</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    <!-- approve Model -->
+                                                <div class="modal fade" id="approve{{ allocate.id }}" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel"> Allocate Actions
+                                                                    </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form {% if allocate.is_approved %}action="{{allocate.undo_approve}}" 
+                                                            {% else %} action="{{ allocate.approve_allocate }}" {% endif %}>
+                                                                <div class="modal-body">
+                                                                    Are You  <strong >
+                                                                        Sure? </strong> ?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary btn-sm"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-info btn-sm">
+                                                                        
+                                                                        {% if allocate.is_approved %} Disqualify
+                                                            {% else %} Approve {% endif %}
+                                                                        
+                                                                    
+                                                                    
+                                                                    
+                                                                    </button>
                                                                 </div>
                                                             </form>
                                                         </div>

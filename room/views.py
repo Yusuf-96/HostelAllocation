@@ -21,7 +21,7 @@ class Index(LoginRequiredMixin, PermissionRequiredMixin, View):
         form=RoomForm(initial=DefaultCapacity)
         context={
             'rooms':rooms,
-            'form':form,
+            'form' :form,
         }
         return render(self.request,template_name,context)
 
