@@ -5,7 +5,7 @@ from django.urls import reverse
 
 # Create your models here.
 class Department(models.Model):
-    name=models.CharField(max_length=100)
+    name=models.CharField(max_length=100, unique=True)
 
     def __str__(self):
        return self.name
@@ -16,3 +16,4 @@ class Department(models.Model):
     def update_department(self):
       return reverse('department:update',kwargs={'id':self.id})
    
+111

@@ -5,7 +5,7 @@ from .models import Room
 class RoomForm(forms.ModelForm):
     class Meta:
         model =Room
-        exclude=['user']
+        exclude=['user','is_taken','level']
 
         widgets={
             'hostel':forms.Select(

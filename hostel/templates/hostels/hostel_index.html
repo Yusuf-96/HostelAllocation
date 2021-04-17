@@ -66,7 +66,9 @@
                                                     aria-label="CSS grade: activate to sort column ascending">Category
                                                 </th>
                                                 {% if perms.hostel.add_hostel %}
-                                                <th>Actions
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1"
+                                                aria-label="CSS grade: activate to sort column ascending">Actions
                                                 </th>
                                                 {% endif%}
                                             </tr>
@@ -76,9 +78,9 @@
                                             <tr role="row" class="odd">
                                                 <td tabindex="0" class="sorting_1">{{ forloop.counter }}</td>
                                                 <td tabindex="0" class="sorting_1">{{ hostel.name }}</td>
-                                                <td>{{ hostel.category }}</td>
+                                                <td tabindex="0" class="sorting_1">{{ hostel.category }}</td>
                                                 {% if perms.hostel.add_hostel %}
-                                                <td>
+                                                <td tabindex="0" class="sorting_1">
                                                     <a href="javascript:void" class="btn btn-primary btn-sm" 
                                                     data-toggle="modal" data-target="#edit{{ hostel.id }}"> Edit   </a>
                                                     <a href="javascript:void" class="btn btn-danger btn-sm" 
@@ -223,8 +225,8 @@
                     {{ form.as_p }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Create Hostel</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Create Hostel</button>
                 </div>
             </form>
         </div>

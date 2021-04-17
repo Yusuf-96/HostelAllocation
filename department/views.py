@@ -24,6 +24,7 @@ class Index(View):
             form.save()
         messages.success(self.request,'department created successfully')
         return redirect('department:index')
+       
 
 
 class Update(View):

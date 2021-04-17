@@ -5,5 +5,5 @@ from .models import Hostel
 @admin.register(Hostel)
 class HostelAdmin(admin.ModelAdmin):
     list_display=[
-        'name'
+        'name', 'category'
     ]

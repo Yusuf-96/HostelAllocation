@@ -60,7 +60,10 @@
                                                     aria-label="Engine version: activate to sort column ascending">
                                                     Name</th>
                                                     {% if perms.departmetn.add_department %}
-                                                    <th>Actions
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="Engine version: activate to sort column ascending">
+                                                    Actions
                                                     </th>
                                                     {% endif%}
                                             </tr>
@@ -71,7 +74,7 @@
                                                 <td tabindex="0" class="sorting_1">{{ forloop.counter }}</td>
                                                 <td tabindex="0" class="sorting_1">{{ department.name }}</td>
                                                 {% if perms.department.add_department %}
-                                                <td>
+                                                <td tabindex="0" class="sorting_1">
                                                     <a href="javascript:void" class="btn btn-primary btn-sm"
                                                     data-toggle="modal" data-target="#edit{{ department.id }}"> Edit   </a>
                                                     <a href="javascript:void" class="btn btn-danger btn-sm" 
@@ -204,8 +207,8 @@
                     {{ form.as_p }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Create Department</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Create Department</button>
                 </div>
             </form>
         </div>

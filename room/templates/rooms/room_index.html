@@ -88,13 +88,14 @@
                                         </thead>
                                         <tbody>
                                             {% for room in rooms  %}
+                                            {% if room.hostel.category == request.user.profile.status or request.user.is_staff %}
                                             <tr role="row" class="odd">
                                                 <td tabindex="0" class="sorting_1">{{ forloop.counter }}</td>
                                                 <td tabindex="0" class="sorting_1">{{ room.name }}</td>
-                                                <td>{{ room.capacity }}</td>
-                                                <td>{{ room.hostel }}</td>
+                                                <td tabindex="0" class="sorting_1"> {{ room.capacity }}</td>
+                                                <td tabindex="0" class="sorting_1">{{ room.hostel }}</td>
                                                 <!-- <td>{{ room.level }}</td>  -->
-                                                <td>
+                                                <td tabindex="0" class="sorting_1">
                                                     {% if room.level  == room.capacity %}
                                                     <div class="badge badge-success">Full</div>
                                                      {%else%}
@@ -140,18 +141,18 @@
                                                                             type="text" name="name" value="{{ room.name }}"
                                                                             class="form-control" maxlength="100"
                                                                             required="" id="id_name"></p>
-                                                                    <p><label for="id_is_taken">Is taken:</label> <input
+                                                                    <!-- <p><label for="id_is_taken">Is taken:</label> <input
                                                                             type="checkbox" name="is_taken"
-                                                                            id="id_is_taken"></p>
+                                                                            id="id_is_taken"></p> -->
                                                                     <p><label for="id_capacity">Capacity:</label> <input
                                                                             type="number" value="{{ room.capacity }}" name="capacity" value="6"
                                                                             class="form-control" required=""
                                                                             id="id_capacity"></p>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
+                                                                    <button type="button" class="btn btn-secondary btn-sm"
                                                                         data-dismiss="modal">Close</button>
-                                                                    <button type="submit" class="btn btn-primary">Update
+                                                                    <button type="submit" class="btn btn-primary btn-sm">Update
                                                                         </button>
                                                                 </div>
                                                             </form>
@@ -223,6 +224,7 @@
 
 
                                             </tr>
+                                            {% endif %}
                                             {% endfor %}
 
                                         </tbody>
@@ -287,7 +289,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Room</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Create Room</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -298,8 +300,8 @@
                     {{ form.as_p }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Create Room</button>
+                    <button type="button" class="btn btn-secondary btn-sm"  data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Create Room</button>
                 </div>
             </form>
         </div>

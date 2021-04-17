@@ -54,16 +54,19 @@
                                                     colspan="1"
                                                     aria-label="Engine version: activate to sort column ascending">
                                                     Name</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                <!-- <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                                     colspan="1"
                                                     aria-label="Engine version: activate to sort column ascending">
-                                                    student</th>
+                                                    student</th> -->
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                                     colspan="1"
                                                     aria-label="CSS grade: activate to sort column ascending">department
                                                 </th>
                                                 {% if perms.course.add_course %}
-                                                <th>Actions
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                 colspan="1"
+                                                 aria-label="Engine version: activate to sort column ascending">
+                                                    Actions
                                                 </th>
                                                 {% endif%}
                                             </tr>
@@ -73,10 +76,10 @@
                                             <tr role="row" class="odd">
                                                 <td tabindex="0" class="sorting_1">{{ forloop.counter }}</td>
                                                 <td tabindex="0" class="sorting_1">{{ course.name }}</td>
-                                                <td>{{ course.user }}</td>
-                                                <td>{{ course.department }}</td>
+                                                <!-- <td>{{ course.user }}</td> -->
+                                                <td tabindex="0" class="sorting_1">{{ course.department }}</td>
                                                 {% if perms.cousre.add_course %}
-                                                <td>
+                                                <td tabindex="0" class="sorting_1">
                                                     <a href="javascript:void" class="btn btn-primary btn-sm"
                                                     data-toggle="modal" data-target="#edit{{ course.id }}" > Edit   </a>
                                                     <a href="javascript:void" class="btn btn-danger btn-sm" data-toggle="modal" 

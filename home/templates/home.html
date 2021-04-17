@@ -55,6 +55,10 @@
                                                     colspan="1"
                                                     aria-label="Engine version: activate to sort column ascending">
                                                     student</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="Engine version: activate to sort column ascending">
+                                                    Hostel</th>
 
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                                     colspan="1"
@@ -78,6 +82,7 @@
                                                 <td tabindex="0" class="sorting_1">{{ forloop.counter }}</td>
                                                 <td tabindex="0" class="sorting_1">{{ allocate.room }}</td>
                                                 <td tabindex="0" class="sorting_1">{{ allocate.user }}</td>
+                                                <td tabindex="0" class="sorting_1">{{ allocate.room.hostel }}</td>
                                                 <td tabindex="0" class="sorting_1">
                                                     {% if allocate.is_approved %}
                                                     <div class="badge badge-success">Verified </div>

@@ -6,6 +6,8 @@ from django.contrib import auth
 from django.contrib.auth.models import User,Group,Permission
 import os
 from django.conf import settings
+# from infromation.models import*
+
 
 class Command(BaseCommand):
     help = 'Create seed'
@@ -28,6 +30,10 @@ class Command(BaseCommand):
 
                     { 'first_name':'yusufu', 'last_name':'', 'username':'admin', 'email':'admin@admin.com', 'password':'password', 
                     'is_superuser':True,'is_staff':True,'date_joined':f'{ timezone.now() }' },
+
+                     # ============================================Generic User Account====================================================
+                    { 'first_name':'hasani', 'last_name':'ali', 'username':'B41611022', 'email':'hasani@hasani.com', 'password':'password', 
+                    'is_superuser':False,'is_staff':False, 'date_joined':f'{ timezone.now() }' },
                 ]
                 
                 self.stdout.write(self.style.SUCCESS('\n'))
@@ -42,18 +48,19 @@ class Command(BaseCommand):
                         # self.stdout.write(self.style.SUCCESS(f'| ------>profile for {profile.user } created successfully! ' ))
                     except User.DoesNotExist:
                         raise CommandError('Error creating User')
-                if user.username == 'Yusuph':
-                    Group.objects.all().delete()
-                    groupAdministrator=Group.objects.create(name='administrator')
-                    groupClient=Group.objects.create(name='client')
-                    perms=Permission.objects.all()
-                    groupAdministrator.permissions.set(perms)
-                    user.groups.add(groupAdministrator)
+
+                # if user.username == 'Yusuph':
+                #     Group.objects.all().delete()
+                #     groupAdministrator=Group.objects.create(name='administrator')
+                #     groupClient=Group.objects.create(name='client')
+                #     perms=Permission.objects.all()
+                #     groupAdministrator.permissions.set(perms)
+                #     user.groups.add(groupAdministrator)
                 
                    
 
                 self.stdout.write(self.style.SUCCESS('\n' ))
                 self.stdout.write(self.style.SUCCESS('---------------------------------------------' ))
-                self.stdout.write(self.style.SUCCESS(f'Congrats! {len(contexts)} Default Users seeded Successfully!' ))
+                self.stdout.write(self.style.SUCCESS(f'Congrats! {len(contexts)}  User(s) seeded Successfully!' ))
                 self.stdout.write(self.style.SUCCESS('---------------------------------------------' ))
                     

@@ -37,53 +37,60 @@
                                             </select> entries</label></div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
-                                    <div id="example1_filter" class="dataTables_filter"><label>Search:<input
-                                                type="search" class="form-control form-control-sm" placeholder=""
-                                                aria-controls="example1"></label></div>
+                                    <div id="exampl1" class="dataTables_filter"><label>Search:<input
+                                                type="text" class="form-control form-control-sm" placeholder=""
+                                                aria-controls="exampl1"></label></div>
+                    
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table id="example1" class="table table-bordered table-striped dataTable dtr-inline"
-                                        role="grid" aria-describedby="example1_info">
+                                    <table id="exampl1" class="table table-bordered table-striped dataTable dtr-inline"
+                                        role="grid" aria-describedby="exampl1_info">
                                         <thead>
                                             <tr role="row">
 
 
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                <th class="sorting" tabindex="0" aria-controls="exampl1" rowspan="1"
                                                     colspan="1"
                                                     aria-label="Engine version: activate to sort column ascending">
                                                     ID</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                <th class="sorting" tabindex="0" aria-controls="exampl1" rowspan="1"
                                                     colspan="1"
                                                     aria-label="Engine version: activate to sort column ascending">
                                                     Room</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                <th class="sorting" tabindex="0" aria-controls="exampl1" rowspan="1"
                                                     colspan="1"
                                                     aria-label="Engine version: activate to sort column ascending">
                                                     student</th>
+                                                <th class="sorting" tabindex="0" aria-controls="exampl1" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="Engine version: activate to sort column ascending">
+                                                    Hostel</th>
 
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                <th class="sorting" tabindex="0" aria-controls="exampl1" rowspan="1"
                                                     colspan="1"
                                                     aria-label="Engine version: activate to sort column ascending">
                                                     status</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                <!-- <th class="sorting" tabindex="0" aria-controls="exampl1" rowspan="1"
                                                 colspan="1"
                                                 aria-label="Engine version: activate to sort column ascending">Preview
-                                                </th>
+                                                </th> -->
 
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                                colspan="1"
-                                                aria-label="Engine version: activate to sort column ascending">Actions
+                                                <th class="sorting" tabindex="0" aria-controls="exampl1" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="Engine version: activate to sort column ascending">
+                                                    Actions
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id = "myTable"> 
                                             {% for allocate in allocates  %}
                                             <tr role="row" class="odd">
                                                 <td tabindex="0" class="sorting_1">{{ forloop.counter }}</td>
                                                 <td tabindex="0" class="sorting_1">{{ allocate.room }}</td>
                                                 <td tabindex="0" class="sorting_1">{{ allocate.user }}</td>
+                                                <td tabindex="0" class="sorting_1">{{ allocate.room.hostel }}</td>
 
                                                 <td tabindex="0" class="sorting_1">
                                                     {% if allocate.is_approved %}
@@ -95,28 +102,113 @@
                                                         Not verified
                                                     </div>
                                                     {% endif  %}
+                                                    <a href="javascript:void" class="btn btn-primary btn-sm
+                                                    " data-toggle="modal" data-target="#view{{ allocate.id }}">view
+                                                    </a>
                                                 </td>
-                                                <td>
+                                                <!-- <td>
                                                     <a href="javascript:void" class="btn btn-primary btn-sm
                                                     "  data-toggle="modal" data-target="#">view details </a>
-                                                </td>
+                                                </td> -->
                                                 <td>
-                                                
-                                                    <a href="javascript:void" class="btn btn-primary btn-sm
-                                                    "  data-toggle="modal" data-target="#edit{{ allocate.id }}">Edit </a>
+
+                                                    <!-- <a href="javascript:void" class="btn btn-primary btn-sm
+                                                    " data-toggle="modal" data-target="#edit{{ allocate.id }}">Edit
+                                                    </a> -->
                                                     <a href="javascript:void" class="btn btn-danger btn-sm"
                                                         data-toggle="modal" data-target="#delete{{ allocate.id }}">
                                                         Delete </a>
                                                     {% if not allocate.is_approved %}
-                                                        <a href=""  data-toggle="modal" data-target="#approve{{ allocate.id }}" 
-                                                    class="btn btn-info btn-sm"> Approve </a>
+                                                    <a href="" data-toggle="modal"
+                                                        data-target="#approve{{ allocate.id }}"
+                                                        class="btn btn-info btn-sm"> Approve </a>
                                                     {% else %}
-                                                    <a href=""  data-toggle="modal" data-target="#approve{{ allocate.id }}" 
-                                                    class="btn btn-warning btn-sm">UNDO </a>
+                                                    <a href="" data-toggle="modal"
+                                                        data-target="#approve{{ allocate.id }}"
+                                                        class="btn btn-warning btn-sm">UNDO </a>
                                                     {% endif  %}
 
                                                 </td>
 
+                                                <!-- View Model -->
+                                                <div class="modal fade" id="view{{ allocate.id }}" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Student
+                                                                    Informations</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form action="{{ allocate.update_allocate }}" method="POST">
+                                                                {% csrf_token %}
+                                                                <div class="modal-body">
+                                                                    {% for info in allocate.user.information.all %}
+                                                                    <div class="text-center">
+                                                                        <img src="{{ allocate.user.profile.profile.url }}" alt="." height="100px" width="100px" class="img-circle">
+                                                                            <br> <h3>{{ allocate.user }}</h3>
+                                                                    </div>
+<br>
+                                                                    <div class="list-group">
+                                                                        <div class="list-group-item">
+                                                                           Firstname : 
+                                                                           <strong> {{ allocate.user.first_name }}</strong> 
+                                                                        </div>
+                                                                        <div class="list-group-item">
+                                                                           Lastname : 
+                                                                           <strong> {{ allocate.user.last_name}}</strong> 
+                                                                        </div>
+
+                                                                        <div class="list-group-item">
+                                                                           Room : 
+                                                                           <strong> {{ allocate.room}}</strong> 
+                                                                        </div>
+                                                                        <div class="list-group-item">
+                                                                           Phone : 
+                                                                           <strong> {{ info.phone}}</strong> 
+                                                                        </div>
+
+                                                                        <div class="list-group-item">
+                                                                           hostel : 
+                                                                           <strong> {{ allocate.room.hostel}}</strong> 
+                                                                        </div>
+
+                                                                        <div class="list-group-item">
+                                                                           Course: <strong> {{ info.course}}</strong> 
+                                                                        </div>
+                                                                        <div class="list-group-item">
+                                                                            
+                                                                            Course: <strong> {{ info.department}}</strong> 
+                                                                        </div>
+                                                                        <div class="list-group-item">
+                                                                            
+                                                                            Gender: <strong> {{ info.gender}}</strong> 
+                                                                        </div>
+                                                                        <div class="list-group-item">
+                                                                            
+                                                                            Disability: <strong> {{ info.disability}}</strong> 
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    {% endfor %}
+                                                                    <!-- ------- -->
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <!-- <button type="submit" class="btn btn-primary">Print
+                                                                    </button> -->
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <!-- Edit Model -->
                                                 <div class="modal fade" id="edit{{ allocate.id }}" tabindex="-1"
                                                     role="dialog" aria-labelledby="exampleModalLabel"
@@ -131,45 +223,31 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form  action="{{ allocate.update_allocate }}"  method="POST">
+                                                            <form action="{{ allocate.update_allocate }}" method="POST">
                                                                 {% csrf_token %}
                                                                 <div class="modal-body">
-
-                                                                    <!-- <p><label for="id_room">Room:
-
-                                                                    </label> 
-                                                                        <select
-                                                                            name="room" class="form-control"
-                                                                            id="id_room">
-                                                                            <option value="" disabled  > ---------choose----------- </option>
-                                                                            <option value="1" > {{ allocate.room }}  </option>
-
-                                                                        </select>
-                                                                    </p> -->
                                                                     <p><label for="id_room">Room:</label> <input
-                                                                            type="text" name="room" value="{{ allocate.room }}"
+                                                                            type="text" name="room"
+                                                                            value="{{ allocate.room }}"
                                                                             class="form-control" maxlength="100"
                                                                             required="" id="id_room"></p>
                                                                     <p><label for="id_is_taken">Is taken:</label> <input
                                                                             type="checkbox" name="is_taken"
                                                                             id="id_is_taken"></p>
-                                                                    <!-- <p><label for="id_capacity">Capacity:</label> <input
-                                                                            type="number" value="{{ allocate.capacity }}" name="capacity" value="6"
-                                                                            class="form-control" required=""
-                                                                            id="id_capacity"></p> -->
+
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-dismiss="modal">Close</button>
                                                                     <button type="submit" class="btn btn-primary">Update
-                                                                        </button>
+                                                                    </button>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                    <!-- Delete Model -->
+                                                <!-- Delete Model -->
                                                 <div class="modal fade" id="delete{{ allocate.id }}" tabindex="-1"
                                                     role="dialog" aria-labelledby="exampleModalLabel"
                                                     aria-hidden="true">
@@ -189,7 +267,8 @@
                                                                         {{ allocate.user }} </strong> ?
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary btn-sm"
+                                                                    <button type="button"
+                                                                        class="btn btn-secondary btn-sm"
                                                                         data-dismiss="modal">Close</button>
                                                                     <button type="submit" class="btn btn-danger btn-sm">
                                                                         Delete</button>
@@ -198,37 +277,36 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                    <!-- approve Model -->
+                                                <!-- approve Model -->
                                                 <div class="modal fade" id="approve{{ allocate.id }}" tabindex="-1"
                                                     role="dialog" aria-labelledby="exampleModalLabel"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel"> Allocate Actions
-                                                                    </h5>
+                                                                <h5 class="modal-title" id="exampleModalLabel"> Allocate
+                                                                    Actions
+                                                                </h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form {% if allocate.is_approved %}action="{{allocate.undo_approve}}" 
-                                                            {% else %} action="{{ allocate.approve_allocate }}" {% endif %}>
+                                                            <form
+                                                                {% if allocate.is_approved %}action="{{allocate.undo_approve}}"
+                                                                {% else %} action="{{ allocate.approve_allocate }}"
+                                                                {% endif %}>
                                                                 <div class="modal-body">
-                                                                    Are You  <strong >
+                                                                    Are You <strong>
                                                                         Sure? </strong> ?
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary btn-sm"
+                                                                    <button type="button"
+                                                                        class="btn btn-secondary btn-sm"
                                                                         data-dismiss="modal">Close</button>
                                                                     <button type="submit" class="btn btn-info btn-sm">
-                                                                        
                                                                         {% if allocate.is_approved %} Disqualify
-                                                            {% else %} Approve {% endif %}
-                                                                        
-                                                                    
-                                                                    
-                                                                    
+                                                                        {% else %} Approve {% endif %}
                                                                     </button>
                                                                 </div>
                                                             </form>
@@ -248,7 +326,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
+                                    <div class="dataTables_info" id="exampl1_info" role="status" aria-live="polite">
                                         Showing 1 to 10 of 57 entries</div>
                                 </div>
                                 <div class="col-sm-12 col-md-7">
@@ -309,5 +387,7 @@
         </div>
     </div>
 </div>
+
+
 
 {% endblock %}

@@ -4,5 +4,5 @@ from .models import Room
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
     list_display=[
-        'name','capacity'
+        'name','capacity', 'hostel'
     ]
