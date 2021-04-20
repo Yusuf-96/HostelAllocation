@@ -1,0 +1,1 @@
+web: gunicorn hostelallocation.wsgi --log-file -
