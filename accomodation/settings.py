@@ -20,8 +20,8 @@ SECRET_KEY = 'x%psfq@mnub8^@2l!ysj-c^&6d)*uf%6!aj*oloickldw4fj#7'
 DEBUG = True
 
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['evening-atoll-10841.herokuapp.com']
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['evening-atoll-10841.herokuapp.com']
 
 
 # Application definition
@@ -132,9 +132,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
-    # BASE_DIR , 
-    # 'accomodation/static/',
-    os.path.join(BASE_DIR, 'accomodaton/static'),
+    BASE_DIR , 
+    'accomodation/static/',
+    # os.path.join(BASE_DIR, 'accomodaton/static'),
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
