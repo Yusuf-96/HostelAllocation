@@ -8,7 +8,7 @@ class ProfileForm(forms.ModelForm):
         model=Profile
         # fields='__all__'
         exclude=[
-            'user', 'gender'
+            'user', 'status',
         ]
         labels={
             'profile':'Change Profile Below'

@@ -88,7 +88,7 @@
                                         </thead>
                                         <tbody>
                                             {% for room in rooms  %}
-                                            {% if room.hostel.category == request.user.profile.gender or request.user.is_staff %}
+                                            {% if room.hostel.category == request.user.profile.status or request.user.is_staff %}
                                             <tr role="row" class="odd">
                                                 <td tabindex="0" class="sorting_1">{{ forloop.counter }}</td>
                                                 <td tabindex="0" class="sorting_1">{{ room.name }}</td>
