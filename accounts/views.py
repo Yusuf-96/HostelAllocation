@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.contrib import auth
-from django.contrib.auth.models import  User
+from django.contrib.auth.models import  User, Group
 from .models import Profile
 from django.contrib import messages
 
@@ -43,6 +43,8 @@ def register(request):
                          return redirect('register')
                     else:
                             user=User.objects.create_user(first_name=firstname,last_name=lastname,username=username,email=email,password=password)
+                            group = Group.objects.get(name = 'student')
+                            user.group.add(group)
                             auth.login(request,user)
                             messages.success(request,'Account has been created successfully!')
                             if gender=='1':
@@ -62,8 +64,8 @@ def register(request):
                 return redirect('register')
 
                 
-    else:
-        return render(request,'accounts/register.html')
+    
+    return render(request,'accounts/register.html')
 
 
 
