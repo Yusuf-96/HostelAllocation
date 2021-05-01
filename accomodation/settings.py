@@ -19,6 +19,8 @@ SECRET_KEY = 'x%psfq@mnub8^@2l!ysj-c^&6d)*uf%6!aj*oloickldw4fj#7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+# ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['evening-atoll-10841.herokuapp.com']
 
 
@@ -130,6 +132,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
+    # BASE_DIR , 
+    # 'accomodation/static/',
     os.path.join(BASE_DIR, 'accomodaton/static'),
 ]
 

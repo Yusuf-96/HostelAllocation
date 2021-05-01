@@ -44,16 +44,16 @@ def register(request):
                     else:
                             user=User.objects.create_user(first_name=firstname,last_name=lastname,username=username,email=email,password=password)
                             auth.login(request,user)
-                            messages.success(request,'login successfully!')
+                            messages.success(request,'Account has been created successfully!')
                             if gender=='1':
                                 my_status='Mr'                           
                                 Profile.objects.create(user_id=request.user.id, profile='images/users/default/he.png',status=my_status)
-                                return redirect('default.index')
+                                return redirect('login')
 
                             elif gender=='2':
                                 my_status='Miss'
                                 Profile.objects.create(user_id=request.user.id, profile='images/users/default/she.png',status=my_status)
-                                return redirect('default.index')
+                                return redirect('login')
                             
                             
                      
