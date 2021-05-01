@@ -42,20 +42,22 @@ def register(request):
                          messages.error(request,'Email Already exist ')
                          return redirect('register')
                     else:
-                            user=User.objects.create_user(first_name=firstname,last_name=lastname,gender=gender, username=username,email=email,password=password)
+                            user=User.objects.create_user(first_name=firstname,last_name=lastname,username=username,email=email,password=password)
                             group = Group.objects.get(name = 'student')
                             user.groups.add(group)
                             auth.login(request,user)
                             messages.success(request,'Account has been created successfully!')
-                            # if gender=='1':
-                            #     my_status='Male'                           
-                            #     Profile.objects.create(user_id=request.user.id, profile='images/users/default/he.png',status=my_status)
-                            #     return redirect('login')
+                            if gender=='1':
+                                my_status='Male'                           
+                                profile=Profile.objects.create(user_id=request.user.id, profile='images/users/default/he.png',status=my_status)
+                                profile.save()
+                                return redirect('login')
 
-                            # elif gender=='2':
-                            #     my_status='Female'
-                            #     Profile.objects.create(user_id=request.user.id, profile='images/users/default/she.png',status=my_status)
-                            #     return redirect('login')
+                            elif gender=='2':
+                                my_status='Female'
+                                profile=Profile.objects.create(user_id=request.user.id, profile='images/users/default/she.png',status=my_status)
+                                profile.save()
+                                return redirect('login')
                             
                             
                      
