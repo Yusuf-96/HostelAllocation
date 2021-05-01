@@ -44,7 +44,7 @@ def register(request):
                     else:
                             user=User.objects.create_user(first_name=firstname,last_name=lastname,username=username,email=email,password=password)
                             group = Group.objects.get(name = 'student')
-                            user.group.add(group)
+                            user.groups.add(group)
                             auth.login(request,user)
                             messages.success(request,'Account has been created successfully!')
                             if gender=='1':
