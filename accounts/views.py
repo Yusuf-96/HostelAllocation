@@ -49,13 +49,13 @@ def register(request):
                             messages.success(request,'Account has been created successfully!')
                             if gender=='1':
                                 my_status='Male'                           
-                                profile=Profile.objects.create(user_id=request.user.id, profile='images/users/default/he.png',status=my_status)
+                                profile=Profile.objects.create(user_id=request.user.id, profile='images/users/default/he.png',gender=my_status)
                                 profile.save()
                                 return redirect('login')
 
                             elif gender=='2':
                                 my_status='Female'
-                                profile=Profile.objects.create(user_id=request.user.id, profile='images/users/default/she.png',status=my_status)
+                                profile=Profile.objects.create(user_id=request.user.id, profile='images/users/default/she.png',gender=my_status)
                                 profile.save()
                                 return redirect('login')
                             
