@@ -42,7 +42,7 @@ def register(request):
                          messages.error(request,'Email Already exist ')
                          return redirect('register')
                     else:
-                            user=User.objects.create_user(first_name=firstname,last_name=lastname,username=username,email=email,password=password)
+                            user=User.objects.create_user(first_name=firstname,last_name=lastname,gender=gender, username=username,email=email,password=password)
                             group = Group.objects.get(name = 'student')
                             user.groups.add(group)
                             auth.login(request,user)
